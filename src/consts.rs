@@ -1,60 +1,68 @@
-/// The period of the lunar orbit in days.
-pub const ORBIT_PERIOD: f64 = 29.53058770576;
+use crate::Degree;
+pub use std::f64::consts::PI;
 
-/// The offset for the lunar orbit calculations.
-pub const ORBIT_OFFSET: f64 = 2451550.26;
+/// 1980 January 0.0
+pub const EPOCH: f64 = 2444238.5;
 
-/// The period of the lunar distance in days.
-pub const DISTANCE_PERIOD: f64 = 27.55454988;
+/// 1970 January 1.1
+pub const JULIAN_DATE_EPOCH: f64 = 2440587.5;
 
-/// The offset for the lunar distance calculations.
-pub const DISTANCE_OFFSET: f64 = 2451562.2;
+/*
+    Constants defining the Sun's apparent orbit.
+*/
+/// Ecliptic longitude of the Sun at epoch 1980.0
+pub const SUN_ECLIPTIC_LONGITUDE_AT_EPOCH: f64 = 278.833540;
+/// Ecliptic longitude of the Sun at perigee
+pub const SUN_ECLIPTIC_LONGITUDE_AT_PERIGEE: f64 = 282.596403;
+/// Eccentricity of Earth's orbit
+pub const ECCENTRICITY: f64 = 0.016718;
+/// Semi-major axis of Earth's orbit, km
+pub const SUN_SEMI_MAJOR_AXIS: f64 = 1.495985e8;
+/// Sun's angular size, degrees, at semi-major axis distance
+pub const SUN_ANGULAR_SIZE: Degree = 0.533128;
 
-/// The base value for calculating lunation.
-pub const LUNATION_BASE: f64 = 2423436.6115277777;
+/*
+    Elements of the Moon's orbit, epoch 1980.0.
+*/
+/// moon's mean longitude at the epoch
+pub const MOON_ECLIPTIC_LONGITUDE_AT_EPOCH: f64 = 64.975464;
+/// mean longitude of the perigee at the epoch
+pub const MOON_ECLIPTIC_LONGITUDE_AT_PERIGEE: f64 = 349.383063;
+/// mean longitude of the node at the epoch
+pub const MEAN_LONGITUDE_NODE: f64 = 151.950429;
+/// inclination of the Moon's orbit
+pub const MOON_INCLINATION: f64 = 5.145396;
+/// eccentricity of the Moon's orbit
+pub const MOON_ECCENTRICITY: f64 = 0.054900;
+/// moon's angular size at distance a from Earth
+pub const MOON_ANGULAR_SIZE: f64 = 0.5181;
+/// semi-major axis of Moon's orbit in km
+pub const MOON_SEMI_MAJOR_AXIS: f64 = 384401.0;
+/// parallax at distance a from Earth
+pub const MOON_PARALLAX: f64 = 0.9507;
+/// synodic month (new Moon to new Moon) in days
+pub const SYNODIC_MONTH: f64 = 29.53058868;
 
-/// The mean radius of the Earth in kilometers.
-pub const EARTH_RADIUS_KM: f64 = 6371.0084;
-
-
-/// Represents a lunar phase with name, emoji and start and end fractions.
-#[derive(Debug, Clone, Copy)]
-pub struct Phase {
-    /// Name of the lunar phase.
-    pub name: &'static str,
-    /// Emoji representing the lunar phase.
-    pub emoji: &'static str,
-    /// Start fraction of the lunar phase.
-    pub start: f64,
-    /// End fraction of the lunar phase.
-    pub end: f64,
-}
-pub const PHASES: [Phase; 8] = [
-    Phase { emoji: "🌑", name: "New Moon", start: 0.0, end: 0.02 },
-    Phase { emoji: "🌒", name: "Waxing Crescent", start: 0.02, end: 0.22 }, 
-    Phase { emoji: "🌓", name: "First Quarter", start: 0.22, end: 0.27 },
-    Phase { emoji: "🌔", name: "Waxing Gibbous", start: 0.27, end: 0.47 },
-    Phase { emoji: "🌕", name: "Full Moon", start: 0.47, end: 0.52 },
-    Phase { emoji: "🌖", name: "Waning Gibbous", start: 0.52, end: 0.72 },
-    Phase { emoji: "🌗", name: "Last Quarter", start: 0.72, end: 0.77 },
-    Phase { emoji: "🌘", name: "Waning Crescent", start: 0.77, end: 1.0 },
+/// Name of the phase
+pub const PHASE_NAME: [&str; 8] = [
+    "New Moon",
+    "Waxing Crescent",
+    "First Quarter",
+    "Waxing Gibbous",
+    "Full Moon",
+    "Waning Gibbous",
+    "Last Quarter",
+    "Waning Crescent",
 ];
 
-/// Represents information about the moon, including its julian date, phase,
-/// age, illumination, distance, and lunation.
-#[derive(Debug, Clone, Copy)]
-pub struct Moon {
-    /// A continuous count of days and fractions since noon Universal Time on January 1, 4713 BC 
-    pub julian_date: f64,
-    /// Phase of the moon.
-    pub phase: f64,
-    /// Age of the moon.
-    pub age: f64,
-    /// Illumination of the moon (0 to 1 where 1 is a full moon).
-    pub illumination: f64,
-    /// Distance of the moon in earth radii.
-    pub distance: f64,
-    /// Lunation number.
-    pub lunation: u16,
-}
-
+/// Unicode representation of the given phase
+pub const MOON_ICON: [&str; 8] = [
+    "\u{1f311}",
+    "\u{1f312}",
+    "\u{1f313}",
+    "\u{1f314}",
+    "\u{1f315}",
+    "\u{1f316}",
+    "\u{1f317}",
+    "\u{1f318}",
+];

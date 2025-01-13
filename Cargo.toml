@@ -1,9 +1,9 @@
 [package]
 name = "moon-calc"
-version = "1.0.1"
+version = "2.0.0-rc1"
 edition = "2021"
 repository = "https://github.com/0elek/moon-calc"
-description = "Moon phase calculator"
+description = "moon tool"
 license = "MIT"
 homepage = "https://github.com/0elek/moon-calc"
 readme = "readme.md"
@@ -11,3 +11,4 @@ readme = "readme.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
