@@ -1,5 +1,10 @@
+#[warn(missing_docs)]
+/// constants
 pub mod consts;
+
+/// utilities for time
 pub mod time;
+
 use consts::*;
 use time::*;
 
@@ -183,11 +188,9 @@ pub fn phase(date_timestamp: f64) -> PhaseRes {
     // Calculate Moon's parallax
     let _moon_parallax = MOON_PARALLAX / moon_diameter_fract;
 
-    dbg!(SYNODIC_MONTH * (fix_angle(moon_age) / 360.0));
-
     PhaseRes {
-        phase: fix_angle(moon_age) / 360.0,
-        illuminated_fraction: moon_phase,
+        phase: moon_phase,
+        illuminated_fraction: fix_angle(moon_age) / 360.0,
         age: SYNODIC_MONTH * (fix_angle(moon_age) / 360.0),
         distance: moon_dist,
         angular_diameter,
@@ -244,7 +247,6 @@ pub fn meanphase(sdate: f64, k: f64) -> f64 {
 /// - 0.25: First Quarter
 /// - 0.5:  Full Moon
 /// - 0.75: Last Quarter
-
 #[derive(Debug, Clone, Copy)]
 pub enum PhaseSelector {
     NewMoon,
@@ -259,7 +261,7 @@ impl From<f64> for PhaseSelector {
             0.25..=0.50 => Self::FirstQuarter,
             0.50..=0.75 => Self::FullMoon,
             0.75..=1.0 => Self::LastQuarter,
-            _ => panic!("pahse cant be over 1.0 or under 0.0"),
+            _ => panic!("phase cant be over 1.0 or under 0.0"),
         }
     }
 }
@@ -447,30 +449,37 @@ pub fn phaselist(start_date: f64, end_date: f64) -> Vec<f64> {
 impl PhaseRes {
     /// Get the icon of the phase
     pub fn get_icon(&self) -> &str {
-        match &self.phase {
-            0.00..=0.125 => MOON_ICON[0],
-            0.125..=0.25 => MOON_ICON[1],
-            0.25..=0.375 => MOON_ICON[2],
-            0.375..=0.50 => MOON_ICON[3],
-            0.50..=0.625 => MOON_ICON[4],
-            0.625..=0.75 => MOON_ICON[5],
-            0.75..=0.875 => MOON_ICON[6],
-            0.875..=1.00 => MOON_ICON[7],
-            _ => panic!("phase is over 1.0"),
-        }
+        MOON_ICON
+            .get(self.get_nth().unwrap())
+            .expect("bad implementation the index is out of bounds.")
     }
     /// Get the name of the phase
     pub fn get_name(&self) -> &str {
-        match &self.phase {
-            0.00..=0.125 => PHASE_NAME[0],
-            0.125..=0.25 => PHASE_NAME[1],
-            0.25..=0.375 => PHASE_NAME[2],
-            0.375..=0.50 => PHASE_NAME[3],
-            0.50..=0.625 => PHASE_NAME[4],
-            0.625..=0.75 => PHASE_NAME[5],
-            0.75..=0.875 => PHASE_NAME[6],
-            0.875..=1.00 => PHASE_NAME[7],
-            _ => panic!("phase is over 1.0"),
+        PHASE_NAME
+            .get(self.get_nth().unwrap())
+            .expect("bad implementation the index is out of bounds.")
+    }
+
+    // the fuk is dis
+    // idk :p
+    fn get_nth(&self) -> Result<usize, String> {
+        let offset = (1. / 8.) / 2.;
+        let phase_ranges = [
+            ((0.0 - offset)..=(0.125 - offset), 0),
+            ((0.125 - offset)..=(0.25 - offset), 1),
+            ((0.25 - offset)..=(0.375 - offset), 2),
+            ((0.375 - offset)..=(0.50 - offset), 3),
+            ((0.50 - offset)..=(0.625 - offset), 4),
+            ((0.625 - offset)..=(0.75 - offset), 5),
+            ((0.75 - offset)..=(0.875 - offset), 6),
+            ((0.875 - offset)..=(1.0 - offset), 7),
+        ];
+
+        for (r, n) in phase_ranges {
+            if r.contains(&self.phase) {
+                return Ok(n);
+            }
         }
+        Err("value must be between 0..=1".to_string())
     }
 }

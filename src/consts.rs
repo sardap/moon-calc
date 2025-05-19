@@ -45,14 +45,14 @@ pub const SYNODIC_MONTH: f64 = 29.53058868;
 
 /// Name of the phase
 pub const PHASE_NAME: [&str; 8] = [
-    "New Moon",
-    "Waxing Crescent",
-    "First Quarter",
-    "Waxing Gibbous",
-    "Full Moon",
-    "Waning Gibbous",
-    "Last Quarter",
-    "Waning Crescent",
+    "New Moon",        // 0
+    "Waxing Crescent", // 1
+    "First Quarter",   // 2
+    "Waxing Gibbous",  // 3
+    "Full Moon",       // 4
+    "Waning Gibbous",  // 3
+    "Last Quarter",    // 2
+    "Waning Crescent", // 1
 ];
 
 /// Unicode representation of the given phase

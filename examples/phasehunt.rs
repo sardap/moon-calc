@@ -9,7 +9,7 @@ fn main() {
     let timestamp_in_seconds = duration_since_epoch.as_secs_f64();
     let jtime = julian_time(timestamp_in_seconds);
 
-    // get the list of phases surrounding a date 
+    // get the list of phases surrounding a date
     let phase_max_list = moon_calc::phasehunt(jtime);
     println!("{:?}", phase_max_list);
 }

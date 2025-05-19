@@ -3,7 +3,13 @@
 This library provides functions for calculating the phase of the moon.
 
 ## Usage
+
 see examples
 
-# Acknowledgements
+### Acknowledgements
+
 This library since 2.0 is a port of John Walker's moontool https://www.fourmilab.ch/moontoolw/
+
+## Things to do before 2.0
+- jtime from std time
+- serde feature
