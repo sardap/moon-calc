@@ -1,5 +1,5 @@
 use crate::Degree;
-pub use std::f64::consts::PI;
+pub use core::f64::consts::PI;
 
 /// 1980 January 0.0
 pub const EPOCH: f64 = 2444238.5;
